@@ -1,0 +1,67 @@
+"Vundle
+set nocompatible              
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
+Plugin 'VundleVim/Vundle.vim'
+Plugin 'scrooloose/nerdtree'
+Plugin 'vim-airline/vim-airline'
+Plugin 'vim-airline/vim-airline-themes'
+Plugin 'tpope/vim-surround'
+Plugin 'scrooloose/syntastic'
+Plugin 'terryma/vim-multiple-cursors'
+Plugin 'yggdroot/indentline'
+Plugin 'majutsushi/tagbar'
+
+call vundle#end()
+
+"Basic DotFile
+syntax on
+filetype plugin indent on
+set number
+set virtualedit=onemore
+highlight LineNr term=bold cterm=NONE ctermfg=DarkGrey ctermbg=NONE gui=NONE guifg=DarkGrey guibg=NONE
+set mouse=a
+set clipboard=unnamedplus
+set tabstop=4
+set shiftwidth=4
+
+"Airline
+set laststatus=2
+
+"NerdTree
+let g:NERDTreeWinPos = "left"
+map <C-x> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+"autocmd VimEnter * :NERDTreeToggle
+
+
+"Syntastic
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
+
+"Tagbar
+nmap <C-c> :TagbarToggle<CR>
+
+set encoding=utf-8
+"let g:tagbar_ctags_bin = '/usr/local/Cellar/ctags/5.8_1'
+
+" Add highlighting for function definition in C++
+function! EnhanceCppSyntax()
+	syn match cppFuncDef "::\~\?\zs\h\w*\ze([^)]*\()\s*\(const\)\?\)\?$"
+	hi def link cppFuncDef Special
+
+endfunction
+autocmd Syntax cpp call EnhanceCppSyntax()
+"highlighting for str!ngss in cpp
+highlight MyGroup1 ctermfg=DarkGreen
+match MyGroup1 /string/
+
+
